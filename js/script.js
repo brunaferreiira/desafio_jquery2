@@ -34,22 +34,23 @@
                 $.ajax({
                 type: "POST",
                 url: "http://51.254.204.44/ti/enviar_email.php",
-                dataType: 'JSON'
-                data:('meuemail':email)
-                })
+                dataType: 'JSON',
+                sucess:sucess,
+                data:{'meuemail':email}
+                }).
             //SE OCORRER TUDO CERTO COM A REQUISIÇAO: 1° exibir um toastr.sucess com a mensagem  | 2° 
             // 2° colocar um texto na div  de class resultado. "*emaildigitado* foi salvo em nossa lista de novidades =)"
             //limpar input
             //fechar a alerta depois de 2 segundos            
-                success: function(){
+                success(function(){
                     toastr.sucess('deu bom');
-                    $(.resultado).html(email+' foi salvo em nossa lista de novidades =)');
+                    $(".resultado").html(email+' foi salvo em nossa lista de novidades =)');
                     $('input').val('');
                     setTimeout(toggleAlert,2000);
-                }
-                error: function(){
+                });
+/*                error(function(){
                     toastr.error('deu ruim');
-                }
+                }) */
             }
         })
     });            
@@ -61,6 +62,7 @@
    Se tiver visível, após executar a função, a div será oculta e vice-versa
 */
 function toggleAlert() {
+    console.log("entra")
     $('#alerta').slideToggle();
 }
 
@@ -74,11 +76,18 @@ function contador() {
     if (i<=3){
         $("#contador").css("color", "red");
     }
-    $(#"contador").html("Alerta aparecendo em " +i);
+    $("#contador").html("Alerta aparecendo em " +i);
 
+    setTimeout(function(){
+        i--;
+        if (i>=-1){
+            contador()
+        }
+    },1000)
     //Ocultar a div #contador qnd o cronometro ser menor ou igual a ZERO
 
     //Mudar a cor do texto da div #contador qnd o cronometro ser menor ou igual a TRES
 
     //Sinalizar contador. Ex: Alerta aparecendo em: __  (usar a div #contador)
 }
+
